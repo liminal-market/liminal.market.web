@@ -1,18 +1,24 @@
 :root {
     --font-family:'Questrial', sans-serif;
-    --primary:#040633;
+    --primary: #F9F6FE;
+
 }
 :root:not([data-theme="dark"]) {
     --primary:#040633;
     --primary-hover:#6EE39F;
+    --background-color:#F9F6FE;
 }
-h2, h3 {
+:root ([data-theme="dark"]) {
+    --primary:#040633;
+    --primary-hover:#6EE39F;
+}
 
-    --typography-spacing-vertical:0.3rem
-;}
+h2, h3 {
+    --typography-spacing-vertical:0.3rem;
+}
 
 body {
-    background-color: #F9F6FE;
+    background-color: var(--background-color);
 }
 input, button {
     border-radius:0;
