@@ -45,7 +45,7 @@ footer a {
     color:#CDCDD6;
 }
 footer>small {
-    text-align: center;
+    text-align: left;
     display: block;
 }
 
@@ -188,4 +188,27 @@ main.container {
 .center h2 {
     font-size:3rem;
     margin-top: 3rem;
+}
+
+.advisors {
+    margin:2rem 0 6rem 0;
+    border-bottom: 2px solid #DFDEE2;
+    padding-bottom: 4rem;
+}
+.founder img, .advisors img {
+    border-radius: 50%;
+}
+
+.stats {
+    border-bottom: 2px solid #DFDEE2;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+.stats_data h2 {
+    margin-top:0;
+}
+
+.stats_data {
+    margin-top:4rem;
+
 }

@@ -7,7 +7,7 @@
 
     <title>Liminal Market - Liberate your stock</title>
     <link rel="shortcut icon" href="https://app.liminal.market/img/logos/default_logo.png"/>
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <link rel="stylesheet" href="css/pico.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
@@ -78,9 +78,11 @@
     <div class="grid left">
         <img src="/img/yellow.png" alt=""/>
         <div>
-            <h3>Low fees</h3>
+            <h3>No fees</h3>
             <p>
-                Liminal.market provides low fees on trading, with only 0.3% commission and no hidden fees.
+                Trade with 0% commission and no hidden fees.
+                <br/>
+                <small>In the future, liminal.market will charge a commission fee for each transaction.</small>
             </p>
         </div>
     </div>
@@ -185,6 +187,63 @@
         </div>
         <img src="/img/blue.png" alt=""/>
     </div>
+
+    <div class="center stats">
+        <h2>Value on chain</h2>
+        <div>For more information, check out <a href="https://info.liminal.market/">info.liminal.market</a></div>
+        <div class="grid stats_data">
+            <div>
+                <div>Users</div>
+                <h2 id="wallets_count"></h2>
+            </div>
+            <div>
+                <div>Value</div>
+                <h2 id="value_info"></h2>
+            </div>
+            <div>
+                <div>Transactions</div>
+                <h2 id="transaction_count"></h2>
+            </div>
+        </div>
+
+        <p>Note: Liminal.market is running on testnet so no real value is behind these number.</p>
+    </div>
+
+    <div class="center">
+        <h2>The team</h2>
+    </div>
+    <div class="center founder">
+        <h3>Founder</h3>
+        <div class="grid left">
+            <img src="img/ingi.jpg" alt="Ingi Gauti Ragnarsson, founder of Liminal.market" width="200"/>
+            <p><a href="https://www.linkedin.com/in/ingig/" target="_blank">Ingi Gauti Ragnarsson</a>
+                has been entrepreneur since 2000,
+                building and managing largest
+                ecommerce websites in Iceland
+            </p>
+
+        </div>
+    </div>
+    <div class="center advisors">
+        <h3>Advisors</h3>
+        <div class="grid">
+            <div class="center">
+                <img src="img/gudmundur.jpg" alt="Gudmundur, advisor to Liminal.market" width="100"><br/>
+                <a href="https://www.linkedin.com/in/gudmundur-gummi-magnason-2304b414" target="_blank">Guðmundur
+                    Magnason</a><br/>
+                Experienced retailer with a strong background in marketing and technology. An entrepreneur with a proven
+                track record in operations and leadership.
+            </div>
+            <div class="center">
+                <img src="img/theodor.jpg" alt="Theodor, advisor to Liminal.market" width="100"><br/>
+                <a href="https://www.linkedin.com/in/theodor-gislason-8753a92b/" target="_blank">Guðmundur
+                    Magnason</a><br/>
+                Experienced security expert, founder & CTO of <a href="https://syndis.is/" target="_blank">Syndis</a>.
+                Focused on an attack minded approach to security
+            </div>
+        </div>
+    </div>
+
     <div class="center">
         <button class="sandbox-btn" onclick="window.location.href='https://app.liminal.market'">Test liminal.market
         </button>
@@ -229,7 +288,8 @@
     <details>
         <summary role="button">I have more questions</summary>
         <p>
-            You encourage you to contact us either through email, <a href="mailto:info@liminal.market">info@liminal.market</a> or through our
+            You encourage you to contact us either through email, <a href="mailto:info@liminal.market">info@liminal.market</a>
+            or through our
             <a href="https://discord.gg/ePs5cRceNB" target="_blank">Discord channel</a>
         </p>
     </details>
@@ -240,6 +300,8 @@
             <li><a href="https://app.liminal.market">Play in sandbox</a></li>
             <!--<li>Blog</li>-->
             <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://github.com/liminal-market">Github</a></li>
+            <li><a href="https://discord.gg/ePs5cRceNB">Discord</a></li>
         </ul>
         <ul>
 
@@ -259,4 +321,21 @@
         For details, please visit <a href="https://www.sipc.org" target="_blank">www.sipc.org.</a>
     </small>
 </footer>
+<script>
+    let loadData = async function() {
+        let result = await (await fetch('https://api.thegraph.com/subgraphs/name/liminal-market/liminal-market', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: `query { liminalMarketInfos {    txCount,    walletCount,    value }}`})
+        })).json();
+        let data = result.data.liminalMarketInfos[0];
+        document.getElementById('wallets_count').innerText = data.walletCount;
+        document.getElementById('value_info').innerText = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(data.value);
+        document.getElementById('transaction_count').innerText = data.txCount;
+    }
+
+
+    loadData();
+</script>
 </body>
+</html>
