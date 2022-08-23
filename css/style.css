@@ -1,7 +1,8 @@
 :root {
     --font-family:'Questrial', sans-serif;
     --primary: #F9F6FE;
-
+    --primary:#040633;
+    --background-color:#F9F6FE;
 }
 :root:not([data-theme="dark"]) {
     --primary:#040633;
@@ -11,6 +12,7 @@
 :root ([data-theme="dark"]) {
     --primary:#040633;
     --primary-hover:#6EE39F;
+    --background-color:#F9F6FE;
 }
 
 h2, h3 {
