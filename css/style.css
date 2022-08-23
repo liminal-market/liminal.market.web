@@ -2,7 +2,7 @@
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
     --primary: #040633;
-    --primary-hover: #6EE39F;
+    --primary-hover: #040633;
     --primary-focus: rgba(57, 73, 171, 0.125);
     --primary-inverse: #FFF;
 
@@ -12,7 +12,7 @@
 /* Automatically enabled if user has Dark mode enabled */
 @media only screen and (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-        --primary: #040633;
+        --primary: #6EE39F;
         --primary-hover: #6EE39F;
         --primary-focus: rgba(57, 73, 171, 0.25);
         --primary-inverse: #FFF;
