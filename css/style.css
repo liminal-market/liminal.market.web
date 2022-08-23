@@ -5,6 +5,7 @@
     --primary-hover: #6EE39F;
     --primary-focus: rgba(57, 73, 171, 0.125);
     --primary-inverse: #FFF;
+
 }
 
 /* Indigo Dark scheme (Auto) */
@@ -18,13 +19,12 @@
     }
 }
 
-/* Indigo Dark scheme (Forced) */
-/* Enabled if forced with data-theme="dark" */
 [data-theme="dark"] {
-    --primary: #040633;
+    --primary: #6EE39F;
     --primary-hover: #6EE39F;
     --primary-focus: rgba(57, 73, 171, 0.25);
     --primary-inverse: #FFF;
+
 }
 
 /* Indigo (Common styles) */
