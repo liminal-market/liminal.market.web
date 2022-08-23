@@ -1,23 +1,39 @@
-:root {
-    --font-family:'Questrial', sans-serif;
-    --primary: #F9F6FE;
-    --primary:#040633;
-    --color:#040633;
-    --background-color:#F9F6FE;
-    --h1-color:var(--primary);
-    --h2-color:var(--primary);
-    --h3-color:var(--primary);
-    --h4-color:var(--primary);
-}
+
+[data-theme="light"],
 :root:not([data-theme="dark"]) {
-    --primary:#040633;
-    --primary-hover:#6EE39F;
-    --background-color:#F9F6FE;
+    --primary: #040633;
+    --primary-hover: #6EE39F;
+    --primary-focus: rgba(57, 73, 171, 0.125);
+    --primary-inverse: #FFF;
 }
-:root ([data-theme="dark"]) {
-    --primary:#040633;
-    --primary-hover:#6EE39F;
-    --background-color:#F9F6FE;
+
+/* Indigo Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #040633;
+        --primary-hover: #6EE39F;
+        --primary-focus: rgba(57, 73, 171, 0.25);
+        --primary-inverse: #FFF;
+    }
+}
+
+/* Indigo Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+    --primary: #040633;
+    --primary-hover: #6EE39F;
+    --primary-focus: rgba(57, 73, 171, 0.25);
+    --primary-inverse: #FFF;
+}
+
+/* Indigo (Common styles) */
+:root {
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+    --font-family:'Questrial', sans-serif;
 }
 
 h2, h3 {
