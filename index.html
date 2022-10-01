@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Liminal Market - Liberate your stock</title>
+    <title>liminal.market - Liberate your stock</title>
     <link rel="shortcut icon" href="https://app.liminal.market/img/logos/default_logo.png"/>
     <link rel="stylesheet" href="css/pico.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,9 @@
                     Also subscribe me to technical articles, for the geeks</label>
             </form>
             <div>
-                <img alt="Follow liminal.market on Twitter" src="img/twitter.png" width="36"> <a href="https://twitter.com/liminal_market" style="color:#fff" target="_blank">Follow us on Twitter</a>
+                <img alt="Follow liminal.market on Twitter" src="img/twitter.png" width="36"> <a
+                    href="https://twitter.com/liminal_market" style="color:#fff" target="_blank">Follow us on
+                Twitter</a>
             </div>
         </div>
     </div>
@@ -214,23 +216,39 @@
     <div class="center">
         <h2>Demo</h2>
         <div>
-            Check out our introduction video.<br />
-            <iframe id="video" src="https://www.youtube-nocookie.com/embed/HDIqYvR0has" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            Check out our introduction video.<br/>
+            <iframe id="video" src="https://www.youtube-nocookie.com/embed/HDIqYvR0has" title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
         </div>
     </div>
     <div class="center">
         <h2>The team</h2>
     </div>
     <div class="center founder">
-        <h3>Founder</h3>
-        <div class="grid left">
-            <img src="img/ingi.jpg" alt="Ingi Gauti Ragnarsson, founder of Liminal.market" width="200"/>
-            <p><a href="https://www.linkedin.com/in/ingig/" target="_blank">Ingi Gauti Ragnarsson</a>
-                has been entrepreneur since 2000,
-                building and managing largest
-                ecommerce websites in Iceland
-            </p>
-
+        <div class="grid">
+            <div class="center">
+                <h3>Founder</h3>
+                <div class="grid left">
+                    <img src="img/ingi.jpg" alt="Ingi Gauti Ragnarsson, founder of Liminal.market" width="200"/>
+                    <p><a href="https://www.linkedin.com/in/ingig/" target="_blank">Ingi Gauti Ragnarsson</a>
+                        has been entrepreneur since 2000,
+                        CTO of the largest ecommerce websites in Iceland
+                    </p>
+                    <br />
+                </div>
+            </div>
+            <div class="center">
+                <h3>Co-Founder</h3>
+                <div class="grid left">
+                    <img src="img/arnar.jpg" alt="Arnar Arinbjarnarson, co-founder of Liminal.market" width="200"/>
+                    <p><a href="https://www.linkedin.com/in/arnarar/" target="_blank">Arnar Arinbjarnarson</a>
+                        Investment banker for 11 years, repeated entrepreneur for another 11 years,
+                        now combining these two experiences for liminal.market for the next 11 years
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="center advisors">
@@ -245,7 +263,8 @@
             </div>
             <div class="center">
                 <img src="img/theodor.jpg" alt="Theodor, advisor to Liminal.market" width="100"><br/>
-                <a href="https://www.linkedin.com/in/theodor-gislason-8753a92b/" target="_blank">Theodór Gíslason</a><br/>
+                <a href="https://www.linkedin.com/in/theodor-gislason-8753a92b/" target="_blank">Theodór
+                    Gíslason</a><br/>
                 Experienced security expert, founder & CTO of <a href="https://syndis.is/" target="_blank">Syndis</a>.
                 Focused on an attack minded approach to security
             </div>
@@ -329,15 +348,18 @@
     </small>
 </footer>
 <script>
-    let loadData = async function() {
+    let loadData = async function () {
         let result = await (await fetch('https://api.thegraph.com/subgraphs/name/liminal-market/liminal-market', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: `query { liminalMarketInfos {    txCount,    walletCount,    value }}`})
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({query: `query { liminalMarketInfos {    txCount,    walletCount,    value }}`})
         })).json();
         let data = result.data.liminalMarketInfos[0];
         document.getElementById('wallets_count').innerText = data.walletCount;
-        document.getElementById('value_info').innerText = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(data.value);
+        document.getElementById('value_info').innerText = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(data.value);
         document.getElementById('transaction_count').innerText = data.txCount;
     }
 
