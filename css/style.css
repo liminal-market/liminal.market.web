@@ -16,6 +16,7 @@
         --primary-hover: #6EE39F;
         --primary-focus: rgba(57, 73, 171, 0.25);
         --primary-inverse: #FFF;
+        --background-color: #1e3342;
     }
 }
 
@@ -24,7 +25,7 @@
     --primary-hover: #6EE39F;
     --primary-focus: rgba(57, 73, 171, 0.25);
     --primary-inverse: #FFF;
-
+    --background-color: #1e3342;
 }
 
 /* Indigo (Common styles) */
