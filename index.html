@@ -389,17 +389,20 @@
 </footer>
 <script>
     let loadData = async function () {
-        let result = await (await fetch('https://api.thegraph.com/subgraphs/name/liminal-market/liminal-market', {
+        let result = await (await fetch('https://api.thegraph.com/subgraphs/name/liminal-market/liminal-market-mumbai', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({query: `query { liminalMarketInfos {    txCount,    walletCount,    value }}`})
         })).json();
         let data = result.data.liminalMarketInfos[0];
         document.getElementById('wallets_count').innerText = data.walletCount;
+
         document.getElementById('value_info').innerText = new Intl.NumberFormat('en-US', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'USD',
+            minimumFractionDigits: 0, maximumFractionDigits: 0
         }).format(data.value);
+
         document.getElementById('transaction_count').innerText = data.txCount;
     }
 
