@@ -61,7 +61,7 @@ body>footer {
     color:#CDCDD6;
 }
 body>footer>.grid {
-    max-width: 20rem;
+    max-width: 40rem;
     margin:0 auto;
 }
 footer>.grid > ul > li {
@@ -258,4 +258,18 @@ main.container {
         width: 725px;
         height: 555px;
     }
+}
+
+.top_nav {
+    text-align: center;
+    margin-top:0.6rem;
+}
+.top_nav li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+#whitepaper ul li {
+    list-style: none;
 }
