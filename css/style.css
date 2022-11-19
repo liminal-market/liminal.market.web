@@ -118,7 +118,7 @@ header > .grid {
     @media (min-width: 576px) {
         header > .grid {
             margin: 3rem auto;
-            grid-template-columns: 1fr 3.5fr;
+            grid-template-columns: 1fr 2fr;
         }
     }
 
@@ -150,7 +150,7 @@ header button {
 .sandbox-btn {
     background-color: #6EE39F !important;
     background-image: url('/img/go-btn.png');
-    background-position: 5.6rem 0.8rem;
+    background-position: 8.6rem 1rem;
     padding-right: 2rem;
     height: 3.1rem;
     margin-top: 1.75rem;
@@ -161,8 +161,7 @@ header button {
 }
     @media (min-width: 768px) {
         .sandbox-btn {
-            background-position: 5.6rem 0.9rem;
-            content:'Sandbox'
+            background-position: 8.6rem 1rem;
         }
     }
 @media (max-width: 410px) {
