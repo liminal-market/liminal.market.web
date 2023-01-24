@@ -35,9 +35,10 @@
     --switch-color: var(--primary-inverse);
     --switch-checked-background-color: var(--primary);
     --font-family:'Questrial', sans-serif;
+
 }
 
-h2, h3 {
+h1, h2, h3 {
     --typography-spacing-vertical:0.3rem;
 }
 
@@ -73,6 +74,10 @@ a {
 }
 footer a {
     color:#CDCDD6;
+}
+small {
+    font-size: 0.7rem;
+    font-style: italic;
 }
 footer>small {
     text-align: left;
@@ -271,4 +276,8 @@ main.container {
 
 #whitepaper ul li {
     list-style: none;
+}
+
+.large {
+    font-size: 3rem;
 }
