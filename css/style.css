@@ -229,12 +229,12 @@ main.container {
     margin-top: 3rem;
 }
 
-.advisors {
+.advisors, .social_media {
     margin:2rem 0 6rem 0;
     border-bottom: 2px solid #DFDEE2;
     padding-bottom: 4rem;
 }
-.founder img, .advisors img {
+.founder img, .advisors img, .social_media img {
     border-radius: 50%;
 }
 
@@ -280,4 +280,15 @@ main.container {
 
 .large {
     font-size: 3rem;
+}
+
+.hidden {
+    display:none;
+}
+
+.error {
+    background-color:#290000;
+    padding:1rem 2rem;
+    margin:1rem 0;
+    color:#FF8080
 }
