@@ -292,3 +292,11 @@ main.container {
     margin:1rem 0;
     color:#FF8080
 }
+
+#logo a {
+    color:#fff;
+}
+
+summary > button {
+    /*background-color : #040633;*/
+}
