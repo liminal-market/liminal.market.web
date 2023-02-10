@@ -1,20 +1,18 @@
 import {Contract, BigNumberish, ethers} from "ethers";
 import {Liquid} from "liquidjs";
+import ContractInfo from "./ContractInfo";
 
 export default class ServiceContract {
 
     serviceContractAddress = '0x9B946889657e8f2D943A3841282fBf5751241E85';
-    serviceContract : Contract;
-    ethereum : any;
+    serviceContract: Contract;
+    ethereum: any;
     selector = '';
-    smartContractAddress = '';
-    serviceFeeAddress = '';
-    serviceFee : BigNumberish = 0;
-    name = '';
-    url = '';
-    terms = false;
-    signButton : HTMLButtonElement;
-    constructor(selector : string) {
+    signButton: HTMLButtonElement;
+
+    contractInfo!: ContractInfo;
+
+    constructor(selector: string) {
         // @ts-ignore
         this.ethereum = window.ethereum!;
         this.serviceContract = new Contract(this.serviceContractAddress, ServiceContract.abi, this.ethereum);
@@ -26,10 +24,14 @@ export default class ServiceContract {
             console.error('Could not find selector ' + selector + ' in dom. Module will not load')
             return;
         }
-        const engine = new Liquid({root: './src/views', extname: '.html' });
 
+        const engine = new Liquid({root: './views', extname: '.html'});
         dom.innerHTML = engine.renderFileSync('ContractForm');
+
+        this.contractInfo = new ContractInfo();
         this.signButton = document.querySelector('#sign')! as HTMLButtonElement;
+
+
     }
 
 
@@ -38,10 +40,8 @@ export default class ServiceContract {
 
         this.toggleWrongChainError()
 
-        this.loadVariables();
         this.createOrUpdate();
         this.bindEvents();
-
 
 
     }
@@ -53,7 +53,7 @@ export default class ServiceContract {
                 this.serviceContract = new Contract(this.serviceContractAddress, ServiceContract.abi, signer);
                 this.createOrUpdate();
             })
-            .catch((e : any) => {
+            .catch((e: any) => {
                 if (e.message.indexOf('already pending') != -1) {
                     this.needToConnectWallet();
                 } else {
@@ -79,57 +79,60 @@ export default class ServiceContract {
 
     }
 
-    public loadVariables() {
-        let smart_contract_address = document.querySelector('#smart_contract_address') as HTMLInputElement;
-        let service_fee_address = document.querySelector('#service_fee_address') as HTMLInputElement;
-        let service_fee = document.querySelector('#service_fee') as HTMLInputElement;
-        let name = document.querySelector('#name') as HTMLInputElement;
-        let url = document.querySelector('#url') as HTMLInputElement;
-        let terms = document.querySelector('#terms') as HTMLInputElement;
-
-        this.smartContractAddress = smart_contract_address.value;
-        this.serviceFeeAddress = service_fee_address.value;
-        this.serviceFee = service_fee.value;
-        this.name = name.value;
-        this.url = url.value;
-        this.terms = terms.checked;
-
-    }
     private bindEvents() {
-        let smart_contract_address = document.querySelector('#smart_contract_address') as HTMLInputElement;
-        smart_contract_address.addEventListener('change', async () => {
+        this.contractInfo.smart_contract_address_element.addEventListener('change', async () => {
             this.createOrUpdate();
         });
+
+        let service_fees = document.querySelectorAll('.service_fee');
+        for (let i = 0; i < service_fees.length; i++) {
+            let input = service_fees[i] as HTMLInputElement;
+            input.addEventListener('click', (evt) => {
+                let input = evt.target as HTMLInputElement;
+                this.contractInfo.setServiceFeeType(parseInt(input.value))
+            })
+        }
+
+        let back_to_contract = document.getElementById('back_to_contract');
+        back_to_contract?.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            document.getElementById('service_fee_1')!.click();
+        })
+        let start_coding = document.getElementById('start_coding');
+        start_coding?.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            this.contractInfo.setServiceFeeType(3)
+        })
 
         this.signButton.addEventListener('click', async (evt) => {
             evt.preventDefault();
             let accounts = await this.ethereum.request({method: "eth_requestAccounts"});
             if (this.signButton.innerHTML == 'Update contract') {
-                let result = await this.serviceContract.updateContract(this.smartContractAddress, this.serviceContractAddress,
-                    this.serviceFee, this.name, this.url);
+                let result = await this.serviceContract.updateContract(this.contractInfo.smartContractAddress, this.contractInfo.serviceFeeAddress,
+                    this.contractInfo.serviceFee, this.contractInfo.name, this.contractInfo.url);
 
                 console.log(result);
             } else {
-                let result = await this.serviceContract.createContract(this.smartContractAddress, this.serviceContractAddress,
-                    this.serviceFee, this.name, this.url);
+                let result = await this.serviceContract.createContract(this.contractInfo.smartContractAddress, this.contractInfo.serviceFeeAddress,
+                    this.contractInfo.serviceFee, this.contractInfo.name, this.contractInfo.url);
 
                 console.log(result);
             }
-            if (!this.validateForm()) return;
 
 
         })
     }
+
     private async createOrUpdate() {
-        this.loadVariables()
-        if (this.smartContractAddress == '') {
+        this.contractInfo.loadValues();
+        if (this.contractInfo.smartContractAddress == '') {
             this.signButton.innerHTML = 'Sign contract';
             return;
         }
-        console.log('address:', this.smartContractAddress)
+        console.log('address:', this.contractInfo.smartContractAddress)
 
-        let address = await this.serviceContract.getServiceFeeAddress(this.smartContractAddress)
-            .catch((e : any) => {
+        let address = await this.serviceContract.getServiceFeeAddress(this.contractInfo.smartContractAddress)
+            .catch((e: any) => {
                 this.signButton.innerHTML = 'Sign contract';
             });
         console.log(address);
@@ -139,43 +142,6 @@ export default class ServiceContract {
             return;
         }
 
-    }
-
-    public validateForm() {
-        let smart_contract_address = document.querySelector('#smart_contract_address') as HTMLInputElement;
-        let service_fee_address = document.querySelector('#service_fee_address') as HTMLInputElement;
-        let service_fee = document.querySelector('#service_fee') as HTMLInputElement;
-        let name = document.querySelector('#name') as HTMLInputElement;
-        let url = document.querySelector('#url') as HTMLInputElement;
-        let terms = document.querySelector('#terms') as HTMLInputElement;
-
-
-        if (this.smartContractAddress.trim() == '') {
-            smart_contract_address.focus();
-            return;
-        }
-        if (service_fee_address.value.trim() == '') {
-            service_fee_address.focus();
-            return;
-        }
-        if (service_fee.value.trim() == '') {
-            service_fee.focus();
-            return;
-        }
-        if (name.value.trim() == '') {
-            name.focus();
-            return;
-        }
-        if (url.value.trim() == '') {
-            url.focus();
-            return;
-        }
-        if (!terms.checked) {
-            service_fee.focus();
-            return;
-        }
-
-        return true;
     }
 
     static abi = [
@@ -265,10 +231,6 @@ export default class ServiceContract {
             "type": "function"
         }
     ]
-
-
-
-
 
 
 }

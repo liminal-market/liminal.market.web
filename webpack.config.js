@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
     mode: "development",
-
     entry: './src/main.ts',
     module: {
         rules: [
@@ -18,6 +17,18 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'app/js'),
+    },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'app')
+        },
+        liveReload: false,
+        hot: false,
+        devMiddleware: {
+            writeToDisk: true,
+        },
+        compress: true,
+        allowedHosts: ['localhost']
     },
 };

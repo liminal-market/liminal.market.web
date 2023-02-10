@@ -1,0 +1,126 @@
+<form id="contract_form">
+    <div class="center">
+        <h2>Use liminal.market in your app</h2>
+        <h3>Increase your product selection and revenue</h3>
+    </div>
+    <p>
+        If you want to receive service fee for each transaction
+        you need to set up a contract that you fill out below.<br />
+        If you don't want to receive service fee, you can <a href="" id="start_coding">start coding.</a>
+    </p>
+    <ins>All fields are required.</ins>
+
+    <h2>Choose how you want to set up your service</h2>
+
+    <fieldset>
+        <legend>Service fee - <em>Liminal.market takes 0.2% service fee</em></legend>
+        <label for="service_fee_1">
+            <input type="radio" id="service_fee_1" name="service_fee_type" class="service_fee" value="1" checked>
+            I get service fee for each transaction
+        </label>
+        <label for="service_fee_2">
+            <input type="radio" id="service_fee_2" name="service_fee_type" class="service_fee" value="2">
+            I get service fee for each transaction using custom smart contract
+        </label>
+        <label for="no_service_fee">
+            <input type="radio" id="no_service_fee" name="service_fee_type" class="service_fee" value="3">
+            I don't want to take any service fee
+        </label>
+    </fieldset>
+
+
+    <div class="hidden">
+        <label>Smart contract address (<a href="" target="_blank">How to set up smart contract</a>)</label>
+        <input value="0xA22978CD6db67715cF8795994781435F1483b4Ba" name="smart_contract_address"
+               id="smart_contract_address"/>
+    </div>
+    <div>
+        <label>Service fee address (To what address should fee be paid to?)</label>
+        <input value="0x19d5ABE7854b01960D4911e6536b26F8A38C3a18" name="service_fee_address"
+               id="service_fee_address"/>
+    </div>
+    <div>
+        <label>Service fee points. 100 = 0.1% fee. That is $1 service fee for every $1000 trade</label>
+        <input value="100" name="service_fee" id="service_fee" type="tel"/>
+        <small>Liminal.market takes 200 points (0.2%) fee on all trades. Your fee will be added on top.
+            If you choose 100 points (0.1%), it means user will pay total of 0.3% in service fee</small>
+    </div>
+    <div>
+        <label>Name of service (public, written to blockchain)</label>
+        <input value="Liminal.market" placeholder="Liminal.market" name="name" id="name"/>
+    </div>
+    <div style="position: relative">
+        <label>Url of service (public, written to blockchain)</label>
+        <span style="position: absolute;top: 2.6rem;
+    left: 0.8rem;color:gray">https://</span>
+        <input style="padding-left:4rem" value="liminal.market" placeholder="liminal.market" name="url" id="url"/>
+    </div>
+    <div>
+        <label>Email (not public)</label>
+        <input value="info@liminal.market" placeholder="info@example.com" name="email" id="email"/>
+    </div>
+    <div>
+        <label><input checked type="checkbox" name="terms" id="terms" value="1"/> I agree to terms of
+            service</label>
+    </div>
+    <div class="error hidden" id="wrongNetwork">You are on the wrong network, switch to Mumbai</div>
+    <div>
+        <div class="grid">
+            <button id="sign">Sign contract</button>
+            <button id="deploy" disabled>Deploy contract</button>
+        </div>
+    </div>
+</form>
+
+<div id="get_started" class="hidden">
+    <ins><a id="back_to_contract">< Back</a></ins>
+    <h2>Getting started</h2>
+    <p>Following is an example in Javascript using our library</p>
+    <pre>
+
+        //install the npm package
+        npm install liminal-market
+
+        ---- index.js ---
+
+        //We now setup your code file
+        //import the library into our code
+        import LiminalMarketExternalService;
+
+        //start to load your private key, wallet provider and set variable for you eth address
+        const provider = {}; //load your private key into web3provider
+        const myWalletAddress = '0x...';
+
+        //we initiate LiminalMarketExternalService class
+        const lm = new LiminalMarketExternalService(provider);
+
+        //start by registering you account, you only need to do this one time
+        //you will receive aUSD when you register, so you can trade immediately
+        await lm.createSandboxAccount(firstName, lastName, email);
+
+        //Wait for about 5 minutes, that is the time it takes to register with the broker and to receive aUSD.
+        //You will receive email when your account is ready
+
+        //we can check the aUSD balance, when we have balance on it, we can trade
+        const aUsdAmount = await lm.getAUSDBalance(myWalletAddress)
+        if (aUsdAmount.gt(0)) {
+            //lets buy $50 of AAPL stock. Amount is in Wei, so $50 = 50 * 10**18
+            await lm.buySecurityToken('AAPL', ethers.util.toWei(50));
+        }
+
+        //or sell all of my Apple stock
+        const aaplQuantity = await lm.getSecurityTokenQuantity('AAPL');
+        if (aaplQuantity.gt(0)) {
+            //quantity is in Wei, so 1.23 shares of AAPL = 123 * 10**16
+            await lm.sellSecurityToken('AAPL', aaplQuantity);
+        }
+
+        //retrieve all available securities available on Liminal.market
+        const securityTokens = await lm.getSecurityTokens();
+        console.log(securityTokens);
+
+    </pre>
+
+    <h3>Documentation</h3>
+    <p>Read more about how to use our javascript library in <a href="https://liminalmarket.readme.io/reference/overview">our documentation</a></p>
+</div>
