@@ -1,4 +1,6 @@
 import {ethers} from "ethers";
+import {Liquid} from "liquidjs";
+
 
 export default class ContractInfo {
 
@@ -34,7 +36,11 @@ export default class ContractInfo {
 
     public loadValues() {
         this.serviceFeeType = parseInt(this.service_fee_type_element.value);
-        this.smartContractAddress = this.smart_contract_address_element.value;
+        if (this.serviceFeeType == 2) {
+            this.smartContractAddress = this.smart_contract_address_element.value;
+        } else {
+            this.smartContractAddress = '0x0000000000000000000000000000000000000000'
+        }
         this.serviceFeeAddress = this.service_fee_address_element.value;
         this.serviceFee = this.service_fee_element.value;
         this.name = this.name_element.value;
@@ -47,13 +53,13 @@ export default class ContractInfo {
         this.loadValues()
         if (this.serviceFeeType == 3) return;
 
-        if (this.serviceFeeType == 1 && !ethers.isAddress(this.smartContractAddress)) {
+        if (this.serviceFeeType == 1 && !ethers.utils.isAddress(this.smartContractAddress)) {
             this.isInvalid(this.smart_contract_address_element)
         } else {
             this.isValid(this.smart_contract_address_element);
         }
 
-        if (!ethers.isAddress(this.serviceFeeAddress)) {
+        if (!ethers.utils.isAddress(this.serviceFeeAddress)) {
             this.isInvalid(this.service_fee_address_element);
         } else {
             this.isValid(this.smart_contract_address_element);
@@ -94,8 +100,8 @@ export default class ContractInfo {
         }
 
         if (type == 3) {
-            document.querySelector('#contract_form')!.classList.add('hidden')
-            document.querySelector('#get_started')!.classList.remove('hidden')
+            this.showCodeExample();
+
         } else {
             document.querySelector('#contract_form')!.classList.remove('hidden')
             document.querySelector('#get_started')!.classList.add('hidden')
@@ -112,4 +118,21 @@ export default class ContractInfo {
     }
 
 
+    public showCodeExample() {
+
+        let engine = new Liquid({root: './views', extname: '.html'});
+        let html = engine.renderFileSync('CodeExample', {myWalletAddress : '0x...', myContractAddress : this.smartContractAddress});
+        document.getElementById('code_example')!.innerHTML = html
+        window.scrollTo({top: 0, behavior: 'smooth'});
+console.log('showCodeExample')
+        document.querySelector('#contract_form')?.classList.add('hidden')
+        document.querySelector('#wait_for_transaction')?.classList.add('hidden')
+        document.querySelector('#get_started')?.classList.remove('hidden')
+
+        let hljs = require('highlight.js');
+        document.querySelectorAll('pre code').forEach((el) => {
+            console.log('hightlight', el)
+            hljs.highlightElement(el);
+        });
+    }
 }

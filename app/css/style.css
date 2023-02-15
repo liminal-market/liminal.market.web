@@ -35,7 +35,6 @@
     --switch-color: var(--primary-inverse);
     --switch-checked-background-color: var(--primary);
     --font-family:'Questrial', sans-serif;
-
 }
 
 h1, h2, h3 {
@@ -93,6 +92,9 @@ header input {
     width: 150px;
     margin: auto;
     grid-template-columns: 1fr 1fr;
+}
+#logo img {
+    width: 100px;
 }
 
 #logo a {
@@ -297,6 +299,16 @@ main.container {
     color:#fff;
 }
 
-summary > button {
-    /*background-color : #040633;*/
+#faq summary[role="button"] {
+    background-color : #040633;
+}
+
+.info {
+    background-color: lightblue;
+    color: #000;
+    padding: 2rem;
+    margin: 1rem;
+}
+.info h3, .info p, .info small {
+    color:#000;
 }
