@@ -13,7 +13,7 @@
     <h2>Choose how you want to set up your service</h2>
 
     <fieldset>
-        <legend>Service fee - <em>Liminal.market takes 0.2% service fee</em></legend>
+        <legend>Your service fee - <small><em>Liminal.market takes 0.2% service fee</em></small></legend>
         <label for="service_fee_1">
             <input type="radio" id="service_fee_1" name="service_fee_type" class="service_fee" value="1" checked>
             I get service fee for each transaction
@@ -22,13 +22,24 @@
             <input type="radio" id="service_fee_2" name="service_fee_type" class="service_fee" value="2">
             I get service fee for each transaction using custom smart contract
         </label>
+        <!--
+        <label for="update_service">
+            <input type="radio" id="update_service" name="service_fee_type" class="update_service" value="4">
+            Update contract
+        </label>
+        -->
         <label for="no_service_fee">
             <input type="radio" id="no_service_fee" name="service_fee_type" class="service_fee" value="3">
             I don't want to take any service fee
         </label>
     </fieldset>
 
+    <div class="hidden" id="update_contract">
+        <label>Select smart contract to change</label>
+        <select id="selectedServiceContract">
 
+        </select>
+    </div>
     <div class="hidden">
         <label>Smart contract address (<a href="" target="_blank">How to set up smart contract</a>)</label>
         <input value="0xA22978CD6db67715cF8795994781435F1483b4Ba" name="smart_contract_address"
@@ -63,64 +74,44 @@
         <label><input checked type="checkbox" name="terms" id="terms" value="1"/> I agree to terms of
             service</label>
     </div>
-    <div class="error hidden" id="wrongNetwork">You are on the wrong network, switch to Mumbai</div>
+    <div class="error hidden" id="error"></div>
     <div>
         <div class="grid">
             <button id="sign">Sign contract</button>
-            <button id="deploy" disabled>Deploy contract</button>
         </div>
     </div>
 </form>
 
+<div id="wait_for_transaction" class="hidden">
+    <h3 aria-busy="true">Please wait for transaction to complete…</h3>
+    <p>When transaction is complete, we will display <strong>Get started guide</strong></p>
+</div>
 <div id="get_started" class="hidden">
     <ins><a id="back_to_contract">< Back</a></ins>
     <h2>Getting started</h2>
+    <div id="serviceContractAddressInfo" class="hidden info">
+        <h3>New contract created</h3>
+        <p>This is the address of you contract. This is required for you to receive service fee. Make sure to write it down</p>
+        <small>myContractAddress (see usage in code below)</small><br>
+        <input id="serviceAddress" />
+    </div>
     <p>Following is an example in Javascript using our library</p>
     <pre>
+        <code class="language-javascript">
+    //install the npm package
+    npm install liminal-market
+        </code>
+    </pre>
 
-        //install the npm package
-        npm install liminal-market
-
-        ---- index.js ---
-
-        //We now setup your code file
-        //import the library into our code
-        import LiminalMarketExternalService;
-
-        //start to load your private key, wallet provider and set variable for you eth address
-        const provider = {}; //load your private key into web3provider
-        const myWalletAddress = '0x...';
-
-        //we initiate LiminalMarketExternalService class
-        const lm = new LiminalMarketExternalService(provider);
-
-        //start by registering you account, you only need to do this one time
-        //you will receive aUSD when you register, so you can trade immediately
-        await lm.createSandboxAccount(firstName, lastName, email);
-
-        //Wait for about 5 minutes, that is the time it takes to register with the broker and to receive aUSD.
-        //You will receive email when your account is ready
-
-        //we can check the aUSD balance, when we have balance on it, we can trade
-        const aUsdAmount = await lm.getAUSDBalance(myWalletAddress)
-        if (aUsdAmount.gt(0)) {
-            //lets buy $50 of AAPL stock. Amount is in Wei, so $50 = 50 * 10**18
-            await lm.buySecurityToken('AAPL', ethers.util.toWei(50));
-        }
-
-        //or sell all of my Apple stock
-        const aaplQuantity = await lm.getSecurityTokenQuantity('AAPL');
-        if (aaplQuantity.gt(0)) {
-            //quantity is in Wei, so 1.23 shares of AAPL = 123 * 10**16
-            await lm.sellSecurityToken('AAPL', aaplQuantity);
-        }
-
-        //retrieve all available securities available on Liminal.market
-        const securityTokens = await lm.getSecurityTokens();
-        console.log(securityTokens);
-
+    You Javascript/Typescript file
+    <pre>
+        <code class="language-javascript" id="code_example">
+        </code>
     </pre>
 
     <h3>Documentation</h3>
     <p>Read more about how to use our javascript library in <a href="https://liminalmarket.readme.io/reference/overview">our documentation</a></p>
 </div>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css">
+
