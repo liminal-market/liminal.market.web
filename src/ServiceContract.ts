@@ -37,7 +37,7 @@ export default class ServiceContract {
             this.needToConnectWallet();
         }
         this.browserProvider = new ethers.providers.Web3Provider(this.ethereum);
-        this.listenerProvider = new ethers.providers.WebSocketProvider('ws://127.0.0.1:8545/');
+        this.listenerProvider = new ethers.providers.WebSocketProvider('https://polygon-mumbai.g.alchemy.com/v2/3PB6LtoG1T86WlVsouZ6Qrd0UXQ1wwLd');
         this.serviceContract = new Contract(this.serviceContractAddress, ServiceContract.abi, this.browserProvider);
     }
 
@@ -60,7 +60,7 @@ export default class ServiceContract {
         let chainId = parseInt(this.ethereum.chainId, 16);
         if (isNaN(chainId)) return;
 
-        if (chainId != 31337) {
+        if (chainId != 80001) {
             this.showErrorMessage('You are on the wrong network, switch to Mumbai')
         } else {
             this.hideErrorMessage();
