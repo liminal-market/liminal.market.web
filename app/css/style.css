@@ -312,3 +312,12 @@ main.container {
 .info h3, .info p, .info small {
     color:#000;
 }
+#integrations {
+    text-align: center;
+    border-bottom: 2px solid #DFDEE2;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+#integrations img {
+    height: 100px;
+}

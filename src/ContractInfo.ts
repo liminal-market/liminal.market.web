@@ -124,7 +124,7 @@ export default class ContractInfo {
         let html = engine.renderFileSync('CodeExample', {myWalletAddress : '0x...', myContractAddress : this.smartContractAddress});
         document.getElementById('code_example')!.innerHTML = html
         window.scrollTo({top: 0, behavior: 'smooth'});
-console.log('showCodeExample')
+
         document.querySelector('#contract_form')?.classList.add('hidden')
         document.querySelector('#wait_for_transaction')?.classList.add('hidden')
         document.querySelector('#get_started')?.classList.remove('hidden')

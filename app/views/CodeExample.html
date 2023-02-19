@@ -1,5 +1,5 @@
 //import the library into our code
-import LiminalMarketExternalService;
+import LiminalMarket;
 
 //start to load your private key, wallet provider and set variable for you eth address
 const provider = {}; //load your private key into web3provider
@@ -9,9 +9,9 @@ const myWalletAddress = '{{myWalletAddress}}';
 //if you dont take service fee, this can be skipped
 const myContractAddress = '{{myContractAddress}}';
 {% endif %}
-//initiate LiminalMarketExternalService class
+//initiate LiminalMarket class
 {% if myContractAddress == "0x0000000000000000000000000000000000000000" %}
-const lm = new LiminalMarketExternalService(provider);
+const lm = new LiminalMarket(provider);
 {% else %}
 const lm = new LiminalMarketExternalService(provider, myContractAddress);
 {% endif %}
