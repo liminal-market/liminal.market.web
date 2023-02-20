@@ -4,7 +4,7 @@ import ContractInfo from "./ContractInfo";
 
 export default class ServiceContract {
 
-    serviceContractAddress = '0x9B946889657e8f2D943A3841282fBf5751241E85';
+    serviceContractAddress = '0x0827C71852ba59661aAd9f1fab25B377B3f39C40';
     serviceContract!: Contract;
     selector = '';
     signButton!: HTMLButtonElement;
@@ -31,41 +31,46 @@ export default class ServiceContract {
         this.contractInfo = new ContractInfo();
         this.signButton = document.querySelector('#sign')! as HTMLButtonElement;
 
-
         if (!this.ethereum) {
             this.showErrorMessage('You need to have wallet installed to sign the contract')
             this.needToConnectWallet();
         }
-        this.browserProvider = new ethers.providers.Web3Provider(this.ethereum);
-        this.listenerProvider = new ethers.providers.WebSocketProvider('wss://polygon-mumbai.g.alchemy.com/v2/3PB6LtoG1T86WlVsouZ6Qrd0UXQ1wwLd');
-        this.serviceContract = new Contract(this.serviceContractAddress, ServiceContract.abi, this.browserProvider);
     }
 
 
-    public async load() {
-        this.toggleWrongChainError()
+    public async domReady() {
+        window.addEventListener('load', () => {
 
-        this.createOrUpdate();
-        this.bindEvents();
+            // @ts-ignore
+            let ethereum = window.ethereum;
+            ethereum.on('networkChanged', (networkId : string) => {
+                // @ts-ignore
+                this.load(window.ethereum);
+            });
+            this.load(ethereum);
+            this.createOrUpdate();
+            this.bindEvents();
+        });
+    }
 
-
+    public load(ethereum: any) {
+        let chainId = (ethereum && ethereum.chainId) ? parseInt(ethereum.chainId, 16) : undefined;
+        if (chainId == 31337) {
+            this.listenerProvider = new ethers.providers.WebSocketProvider('ws://127.0.0.1:8545/');
+            this.serviceContractAddress = '0x9B946889657e8f2D943A3841282fBf5751241E85';
+            this.hideErrorMessage();
+        } else if (chainId == 80001) {
+            this.listenerProvider = new ethers.providers.WebSocketProvider('wss://polygon-mumbai.g.alchemy.com/v2/3PB6LtoG1T86WlVsouZ6Qrd0UXQ1wwLd');
+            this.serviceContractAddress = '0x0827C71852ba59661aAd9f1fab25B377B3f39C40';
+            this.hideErrorMessage();
+        } else {
+            this.showErrorMessage('You are on the wrong network, switch to Mumbai')
+        }
+        this.browserProvider = new ethers.providers.Web3Provider(this.ethereum);
+        this.serviceContract = new Contract(this.serviceContractAddress, ServiceContract.abi, this.browserProvider);
     }
     private needToConnectWallet() {
         this.signButton.innerHTML = 'You need to have wallet installed'
-    }
-
-    private toggleWrongChainError() {
-        if (!this.ethereum) return;
-
-        let chainId = parseInt(this.ethereum.chainId, 16);
-        if (isNaN(chainId)) return;
-
-        if (chainId != 80001) {
-            this.showErrorMessage('You are on the wrong network, switch to Mumbai')
-        } else {
-            this.hideErrorMessage();
-        }
-
     }
 
     private bindEvents() {
@@ -124,6 +129,7 @@ export default class ServiceContract {
         this.signButton.addEventListener('click', async (evt) => {
             evt.preventDefault();
             let accounts = await this.ethereum.request({method: "eth_requestAccounts"});
+            this.contractInfo.loadValues();
 
             const signer = this.browserProvider.getSigner()
             let signingContract = new Contract(this.serviceContractAddress, ServiceContract.abi, signer);
@@ -429,4 +435,6 @@ console.log('wait for trans')
             "type": "function"
         }
     ]
+
+
 }
