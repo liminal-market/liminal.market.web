@@ -13,7 +13,7 @@ const myContractAddress = '{{myContractAddress}}';
 {% if myContractAddress == "0x0000000000000000000000000000000000000000" %}
 const lm = new LiminalMarket(provider);
 {% else %}
-const lm = new LiminalMarketExternalService(provider, myContractAddress);
+const lm = LiminalMarket.getInstance(provider, myContractAddress);
 {% endif %}
 //start by registering you account, you only need to do this one time
 //you will receive aUSD when you register, so you can trade immediately

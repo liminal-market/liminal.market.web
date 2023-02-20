@@ -321,3 +321,6 @@ main.container {
 #integrations img {
     height: 100px;
 }
+pre.code_example {
+    padding:0.4rem;
+}

@@ -12,13 +12,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css">
     <link href="css/style.css?d=6" rel="stylesheet"/>
 
     <meta property="og:title" content="Liminal.market - Stocks and ETFs tokenized on blockchain"/>
     <meta property="og:description"
           content="Liminal.market is bridge for stocks and ETFs into blockchain, tokenizing stocks. Giving you transparency, security and releases you from platform lock-in"/>
     <meta property="og:url" content="https://liminal.market"/>
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="website"/>
     <meta property="og:image" content="https://liminal.market/img/logo_large.png"/>
 </head>
 <body>
@@ -40,7 +42,8 @@
                            data-required="true" required/>
                     <input type="hidden" class="input_replaced" name="lists_29[]"
                            data-value="News from liminal.market" value="2" data-required="true"/>
-                    <button id="submit-email" aria-description="Submit your email to our email list" type="submit"></button>
+                    <button id="submit-email" aria-description="Submit your email to our email list"
+                            type="submit"></button>
 
                     <input type="hidden" name="email_address_check" value="" class="input--hidden">
                     <input type="hidden" name="locale" value="en">
@@ -58,7 +61,7 @@
         </div>
     </div>
 </header>
-<main class="container">
+<main class="container" id="index">
     <ul class="top_nav">
         <li><a href="#investors">For Investors</a></li>
         <li><a href="#services">For Services</a></li>
@@ -185,13 +188,25 @@
     <div class="grid left">
         <img src="/img/blue.png" alt=""/>
         <div>
-            <h3>Lock up your stock for collateralization</h3>
+            <h3>Interoperability</h3>
             <p>
-                You can lock your tokenized stock and use it for collateralization, earn added yield on your stock without selling it.
-                <br/><small>Coming fall 2023</small>
+                Transport you data easily between systems. You want your trading in you Excel, Google sheets, Power BI
+                or some other tool. It's easy to push data into them all
             </p>
         </div>
 
+    </div>
+    <div class="grid right">
+
+        <div>
+            <h3>Lock up your stock for collateralization</h3>
+            <p>
+                You can lock your tokenized stock and use it for collateralization, earn added yield on your stock
+                without selling it.
+                <br/><small>Coming fall 2023</small>
+            </p>
+        </div>
+        <img src="/img/green.png" alt=""/>
     </div>
     <div class="center" id="services">
         <h2>For services</h2>
@@ -199,7 +214,7 @@
             <div>
                 <h3>DeFi services</h3>
                 <p>
-                    Are you running a DeFi service and would like to offer your customers stock & ETF trading.<br /><br />
+                    Are you running a DeFi service and would like to offer your customers stock & ETF trading.<br/><br/>
                     Not only do you increase your product selection, but you can also increase your revenue.
                     <br/><br/>
                     <a href="/contract.html">Get started</a>
@@ -212,7 +227,7 @@
             <div>
                 <h3>TradFi services</h3>
                 <p>
-                    Are you running a traditional financial service and would like to offer you customers stock trading.<br /><br />
+                    Are you running a traditional financial service and would like to offer you customers stock trading.<br/><br/>
                     By using Liminal.market you let us handle all the administration, while you take in extra revenue
                     and provide great value to your customers.
                     <br/><br/>
@@ -225,7 +240,7 @@
                 <h3>Funds & brokerages services</h3>
                 <p>
                     Do you have your own algorithm that you use to trade with.
-                    <br /><br />
+                    <br/><br/>
                     Write your own code that decides the logic of you algorithm
                     and execute it with liminal.market in 1 line of code.
                     <br/><br/>
@@ -238,34 +253,78 @@
     <div class="center" id="developers">
         <h2>For developers</h2>
     </div>
-    <div class="grid left">
-        <img src="/img/green.png" alt=""/>
-        <div>
-            <h3>Web developers</h3>
+    <div>
+        <h3>Web developers</h3>
+        <div class="grid">
+
             <p>
                 If you are a developer and you would like to be in the forefront, then this is an opportunity.
-                <br /><br />
+                <br/><br/>
                 With the
                 data being available, you can build a portfolio manager, social investment platform, tax tools, trading
                 games, or what you can think of.
                 <br/><br/>
                 <a href="/contract.html">Get started</a>
             </p>
+            <div>
+            <pre class="language-javascript code_example">
+//install the package
+npm install liminal.market
+            </pre>
+                <pre class="language-javascript code_example">
+import LiminalMarket from 'liminal.market';
+
+//initiate the LiminalMarket class
+const lm = LiminalMarket.getInstance(provider);
+
+//buy $50 of Apple stock
+await lm.buySecurityToken('AAPL', ethers.util.toWei(50));
+
+//sell 1 share of Apple stock
+await lm.sellSecurityToken('AAPL', ethers.util.toWei(1));
+    </pre>
+            </div>
         </div>
     </div>
-    <div class="grid right">
-        <div>
-            <h3>Smart contract developers</h3>
+    <div>
+        <h3>Smart contract developers</h3>
+        <div class="grid">
+        <pre class="language-javascript code_example">
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.16;
+
+import "./LiminalMarketExternalService.sol";
+
+//The smart contract you are making.
+//It inherits from LiminalMarketExternalService
+contract MyDeFiService is LiminalMarketExternalService {
+    //create instance of our smart contract that points to LiminalMarket Mumbai smart contract
+    constructor() LiminalMarketExternalService(0x19d5ABE7854b01960D4911e6536b26F8A38C3a18) { }
+
+    function myBuyLogic() public {
+        //do some magic calculation to decide what to buy and how much
+        this.buySecurityToken(walletAddress, symbol, amount);
+    }
+
+    function mySellLogic() public {
+        //do some magic calculation to decide what to sell and how much
+        this.sellSecurityToken(walletAddress, symbol, quantity);
+    }
+}
+    </pre>
+
+
             <p>
-                Are you a smart contract developer doing swaps, why not add stock trading to your app with few lines of
+                Are you a smart contract developer doing swaps, why not add stock trading to your app with few lines
+                of
                 code.
-                <br /><br />
+                <br/><br/>
                 Add to the product selection of your service and increase the revenue.
                 <br/><br/>
                 <a href="/contract.html">Get started</a>
             </p>
+
         </div>
-        <img src="/img/blue.png" alt=""/>
     </div>
 
     <div class="center stats">
@@ -292,12 +351,12 @@
         <h2>3rd party integrations</h2>
         <div class="grid">
             <div>
-                <img src="img/blockecho2.png" ><br />
-                Feeds your trades into you favorite tool<br />
+                <img src="img/blockecho2.png"><br/>
+                Feeds your trades into you favorite tool<br/>
                 <a href="https://blockecho.io" target="_blank">blockecho.io</a>
             </div>
             <div>
-                <img src="img/bullvsbear2.png" ><br />
+                <img src="img/bullvsbear2.png"><br/>
                 Stock trading game with $$ prices and NFT bragging rights
                 <a href="https://bullvsbear.fun" target="_blank">bullvsbear.fun</a>
             </div>
@@ -307,7 +366,7 @@
     <div class="center">
         <h2>How does it work?</h2>
         <div>
-            Check out our introduction video.<br/>
+            Check out our introduction video & <a href="https://app.liminal.market">play with our demo</a>.<br/>
             <iframe id="video" src="https://www.youtube-nocookie.com/embed/Qp_NH7WIiew" title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -363,13 +422,16 @@
             <div class="center">
                 <img src="img/jarrod.jfif" alt="Jarrod , social media expert at Liminal.market" width="100"><br/>
                 <a href="https://www.linkedin.com/in/jarrod-frankel-64173b64/" target="_blank">Jarrod Frankel</a><br/>
-                I'm a digital marketing freak that's got a knack for sales. I lead a great business of like minded people
-                who work toward providing the best digital footprint possible for those that are a little unversed in the digital ways.
+                I'm a digital marketing freak that's got a knack for sales. I lead a great business of like minded
+                people
+                who work toward providing the best digital footprint possible for those that are a little unversed in
+                the digital ways.
             </div>
             <div class="center">
                 <img src="img/vanjela.jfif" alt="Vanjela , social media expert at Liminal.market" width="100"><br/>
                 <a href="https://www.linkedin.com/in/vbellovoda/" target="_blank">Vanjela B.</a><br/>
-                Specialties: Social Media Management, Content Marketing, Content Creation, SPSS, Market research, PR, Social research
+                Specialties: Social Media Management, Content Marketing, Content Creation, SPSS, Market research, PR,
+                Social research
             </div>
         </div>
     </div>
@@ -395,9 +457,9 @@
     <div class="center" id="whitepaper">
         <h2>Whitepaper, Documentation & Blog</h2>
         <ul>
-            <li><a href="https://docs.liminal.market/reference/whitepaper" target="_blank">Whitepaper</a></li>
-            <li><a href="https://liminalmarket.readme.io/reference/overview" target="_blank">API Documentation</a></li>
-            <li><a href="https://medium.com/@liminal-market" target="_blank">Blog</a></li>
+            <li><a href="https://whitepaper.liminal.market/" target="_blank">Whitepaper</a></li>
+            <li><a href="https://docs.liminal.market/" target="_blank">API Documentation</a></li>
+            <li><a href="https://blog.liminal.market/" target="_blank">Blog</a></li>
         </ul>
 
     </div>
@@ -433,49 +495,51 @@
     <div class="center" id="faq">
         <h2>FAQ</h2>
 
-    <details>
-        <summary role="button">How do I use liminal.market</summary>
-        <p>Your first act is to log in using your wallet. After that you need to finish KYC. When your KYC has been
-            approved you
-            must transfer money to the broker account. When the money has arrived, you will have balance on your aUSD
-            token.
-            With the aUSD token you can do any trade you would like.
-        </p>
-    </details>
-    <details>
-        <summary role="button">What is aUSD</summary>
-        <p>aUSD is a token that represents you balance at the broker. This is 1:1 to USD. This is the real USD balance
-            at the broker.
-        </p>
-    </details>
-    <details>
-        <summary role="button">Do I need to do KYC</summary>
-        <p>Not while you are on Testnet.
-            <br/><br/>If you want to trade with real securities, then you need to do KYC. You are trading at a stock
-            exchange, they require you to finish KYC before trading</p>
-    </details>
-    <details>
-        <summary role="button">How are your equities protected?</summary>
-        <p>
-            Alpaca Securities LLC, executes your trades and holds your stocks in a segregated account in your name.
-            Alpaca is SIPC members and so any stocks they hold for you benefit from SIPC protection.
-            As a member of SIPC customers securities are protected up to $500,000.
-        </p>
-    </details>
-    <details>
-        <summary role="button">How will I receive dividends?</summary>
-        <p>
-            You’ll see dividend payments paid to your aUSD token.
-        </p>
-    </details>
-    <details>
-        <summary role="button">I have more questions</summary>
-        <p>
-            You encourage you to contact us either through email, <a href="mailto:info@liminal.market">info@liminal.market</a>
-            or through our
-            <a href="https://discord.gg/ePs5cRceNB" target="_blank">Discord channel</a>
-        </p>
-    </details>
+        <details>
+            <summary role="button">How do I use liminal.market</summary>
+            <p>Your first act is to log in using your wallet. After that you need to finish KYC. When your KYC has been
+                approved you
+                must transfer money to the broker account. When the money has arrived, you will have balance on your
+                aUSD
+                token.
+                With the aUSD token you can do any trade you would like.
+            </p>
+        </details>
+        <details>
+            <summary role="button">What is aUSD</summary>
+            <p>aUSD is a token that represents you balance at the broker. This is 1:1 to USD. This is the real USD
+                balance
+                at the broker.
+            </p>
+        </details>
+        <details>
+            <summary role="button">Do I need to do KYC</summary>
+            <p>Not while you are on Testnet.
+                <br/><br/>If you want to trade with real securities, then you need to do KYC. You are trading at a stock
+                exchange, they require you to finish KYC before trading</p>
+        </details>
+        <details>
+            <summary role="button">How are your equities protected?</summary>
+            <p>
+                Alpaca Securities LLC, executes your trades and holds your stocks in a segregated account in your name.
+                Alpaca is SIPC members and so any stocks they hold for you benefit from SIPC protection.
+                As a member of SIPC customers securities are protected up to $500,000.
+            </p>
+        </details>
+        <details>
+            <summary role="button">How will I receive dividends?</summary>
+            <p>
+                You’ll see dividend payments paid to your aUSD token.
+            </p>
+        </details>
+        <details>
+            <summary role="button">I have more questions</summary>
+            <p>
+                You encourage you to contact us either through email, <a href="mailto:info@liminal.market">info@liminal.market</a>
+                or through our
+                <a href="https://discord.gg/ePs5cRceNB" target="_blank">Discord channel</a>
+            </p>
+        </details>
     </div>
 </main>
 <footer>
@@ -487,9 +551,9 @@
             <li><a href="https://twitter.com/liminal_market" target="_blank">Twitter</a></li>
         </ul>
         <ul>
-            <li><a href="https://docs.liminal.market/reference/whitepaper" target="_blank">Whitepaper</a></li>
-            <li><a href="https://liminalmarket.readme.io/reference/overview" target="_blank">API Documentation</a></li>
-            <li><a href="https://medium.com/@liminal-market" target="_blank">Blog</a></li>
+            <li><a href="https://whitepaper.liminal.market/" target="_blank">Whitepaper</a></li>
+            <li><a href="https://docs.liminal.market/" target="_blank">API Documentation</a></li>
+            <li><a href="https://blog.liminal.market/" target="_blank">Blog</a></li>
             <li><a href="https://github.com/liminal-market">Github</a></li>
         </ul>
         <ul>
@@ -509,6 +573,8 @@
         For details, please visit <a href="https://www.sipc.org" target="_blank">www.sipc.org.</a>
     </small>
 </footer>
+
+<script src="./js/bundle.js"></script>
 <script>
     let loadData = async function () {
         let result = await (await fetch('https://api.thegraph.com/subgraphs/name/liminal-market/liminal-market-mumbai', {

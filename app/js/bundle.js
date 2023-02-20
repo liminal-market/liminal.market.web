@@ -979,7 +979,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ServiceContract__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ServiceContract */ \"./src/ServiceContract.ts\");\n\r\nlet serviceContract = new _ServiceContract__WEBPACK_IMPORTED_MODULE_0__[\"default\"]('#contract');\r\nserviceContract.domReady();\r\n\n\n//# sourceURL=webpack://liminal.market.web/./src/main.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ServiceContract__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ServiceContract */ \"./src/ServiceContract.ts\");\n\r\nlet contract = document.getElementById('contract');\r\nif (contract) {\r\n    let serviceContract = new _ServiceContract__WEBPACK_IMPORTED_MODULE_0__[\"default\"]('#contract');\r\n    serviceContract.domReady();\r\n}\r\nelse if (document.getElementById('index')) {\r\n    let hljs = __webpack_require__(/*! highlight.js */ \"./node_modules/highlight.js/lib/index.js\");\r\n    document.querySelectorAll('pre').forEach((el) => {\r\n        hljs.highlightElement(el);\r\n    });\r\n}\r\n\n\n//# sourceURL=webpack://liminal.market.web/./src/main.ts?");
 
 /***/ }),
 
