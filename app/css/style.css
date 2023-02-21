@@ -324,3 +324,7 @@ main.container {
 pre.code_example {
     padding:0.4rem;
 }
+
+.service_fee_type label {
+    display: inline-block;
+}
