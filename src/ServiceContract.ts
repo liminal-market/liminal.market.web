@@ -129,6 +129,7 @@ export default class ServiceContract {
         this.signButton.addEventListener('click', async (evt) => {
             evt.preventDefault();
             let accounts = await this.ethereum.request({method: "eth_requestAccounts"});
+            console.log('laod value')
             this.contractInfo.loadValues();
 
             const signer = this.browserProvider.getSigner()
@@ -157,9 +158,25 @@ export default class ServiceContract {
                         this.transactionDone(signerAddress, serviceAddress, serviceFeeAddress, serviceFeePoints, name, url, {});
                     })
                 }
-                console.log('create')
+                console.log('create smartcontractAddress', this.contractInfo.smartContractAddress);
                 result = await signingContract.createContract(this.contractInfo.smartContractAddress, this.contractInfo.serviceFeeAddress,
                     this.contractInfo.serviceFee, this.contractInfo.name, this.contractInfo.url);
+
+                let obj : any = {
+                    signature : '',
+                    smartContractAddress : this.contractInfo.smartContractAddress,
+                    name : this.contractInfo.name,
+                    url : this.contractInfo.url,
+                    email : this.contractInfo.email
+                }
+/*
+                await fetch('https://testnet.liminal.market/signServiceContract', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body : JSON.stringify(obj)
+                })*/
             }
 
             if (result && showWaiting) {

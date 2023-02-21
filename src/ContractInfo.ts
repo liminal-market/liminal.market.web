@@ -35,8 +35,11 @@ export default class ContractInfo {
     }
 
     public loadValues() {
+        this.service_fee_type_element = document.querySelector('.service_fee:checked') as HTMLInputElement;
         this.serviceFeeType = parseInt(this.service_fee_type_element.value);
+        console.log('serviceFeeType', this.serviceFeeType)
         if (this.serviceFeeType == 2) {
+            console.log('this.smart_contract_address_element.value', this.smart_contract_address_element.value)
             this.smartContractAddress = this.smart_contract_address_element.value;
         } else {
             this.smartContractAddress = '0x0000000000000000000000000000000000000000'
