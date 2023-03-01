@@ -2,17 +2,6 @@
   {
     "Class": "us_equity",
     "Exchange": "NYSE",
-    "Symbol": "GME",
-    "Name": "GameStop Corp. Class A",
-    "Status": "active",
-    "Tradable": true,
-    "Fractionable": true,
-    "Logo": "GME.png",
-    "Favorite": 0
-  },
-  {
-    "Class": "us_equity",
-    "Exchange": "NYSE",
     "Symbol": "KO",
     "Name": "Coca-Cola Company",
     "Status": "active",
@@ -20,6 +9,17 @@
     "Fractionable": true,
     "Logo": "KO.png",
     "Favorite": 1
+  },
+  {
+    "Class": "us_equity",
+    "Exchange": "NYSE",
+    "Symbol": "GME",
+    "Name": "GameStop Corp. Class A",
+    "Status": "active",
+    "Tradable": true,
+    "Fractionable": true,
+    "Logo": "GME.png",
+    "Favorite": 0
   },
   {
     "Class": "us_equity",
